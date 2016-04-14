@@ -5,6 +5,21 @@ using namespace std;
 #define MINUS_INFINITY -99999
 
 
+int fmsa_bruteforce(int *A,int l,int h){
+    int left = l;
+    int right = h;
+    int sum = MINUS_INFINITY;
+    for(int i=l ;i<h;i++){
+        int current_sum=0;
+        for(int j=i;j<h;j++){
+            current_sum += A[j];
+            if(sum < current_sum) sum = current_sum;
+        }
+    }
+    return sum;
+}
+
+
 int find_max_crossing_subarray(int *A,int low,int mid, int high){
     int left_sum = MINUS_INFINITY;
     int sum=0;
@@ -28,7 +43,9 @@ int find_max_crossing_subarray(int *A,int low,int mid, int high){
 
 int find_maximum_subarray(int *A,int low,int high){
     if(high == low){
-        return A[low];}
+        return fmsa_bruteforce(A,low,high);
+    //return A[low]; 
+    }
     int mid = (low+high)/2;
     int left_sum = find_maximum_subarray(A,low,mid);
     int right_sum = find_maximum_subarray(A,mid+1,high);
